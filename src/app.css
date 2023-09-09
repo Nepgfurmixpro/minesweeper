@@ -1,0 +1,124 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    flex-flow: column;
+    gap: .5rem;
+}
+
+.game-board {
+    display: grid;
+    grid-template-rows: repeat(var(--grid-rows), auto);
+    grid-template-columns: repeat(var(--grid-columns), auto);
+    width: min-content;
+    height: min-content;
+    outline: solid 1px #00000033;
+}
+
+.game-board > * {
+    width: var(--board-scale);
+    height: var(--board-scale);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    outline: solid 1px #00000033;
+    font-size: calc(var(--board-scale) - 5px);
+    font-weight: 700;
+}
+
+.game-board > *:after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    background-color: var(--square-cover);
+    z-index: 10;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    outline: var(--square-cover-outline) solid 2px;
+    transition: 400ms;
+    opacity: 1;
+    font-size: calc(var(--board-scale) / 2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-board > *:is([data-incorrect="true"], [data-shown="true"]):after {
+    opacity: 0;
+}
+
+.game-board > *[data-flagged="true"]:after {
+    content: '🚩';
+}
+
+.game-board > *[data-correct="true"]:after {
+    background-color: var(--square-correct);
+    outline-color: var(--square-correct);
+}
+.game-board > *[data-incorrect="true"] {
+    background-color: var(--square-incorrect);
+}
+
+
+.game-board > *[data-shown="false"]:not([data-incorrect="true"], [data-correct="true"]):before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    background: var(--square-gradient);
+}
+
+.game-board > *[data-shown="false"]:hover:after {
+    outline: transparent solid 2px;
+}
+
+.inner-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset-button {
+    background-color: var(--reset-button-background);
+    margin-top: 2rem;
+    padding: .5rem 2rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    transition: 350ms;
+}
+
+.reset-button:hover {
+    background-color: var(--reset-button-hover);
+}
+
+.top-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 2rem 0;
+    font-size: calc(var(--board-scale) / 2);
+}
+
+.won-container {
+    font-size: 2vw;
+    font-weight: 700;
+    animation: popIn 350ms 1 forwards ease-out;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
