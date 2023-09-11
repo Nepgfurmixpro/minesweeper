@@ -131,7 +131,7 @@ class BoardManager {
   private RecursiveShow(square: Square) {
     this.GetSquare(square.x, square.y)!.state = SquareState.Shown
     if (square.nearbyBomb == 0 && !square.isBomb) {
-      let nearby = this.GetNearby(square, true)
+      let nearby = this.GetNearby(square)
       for (const s of nearby) {
         if (s.state == SquareState.Hidden) {
           this.RecursiveShow(s)
